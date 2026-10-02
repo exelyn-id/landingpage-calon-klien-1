@@ -1,0 +1,4 @@
+logo.jpg = Instagram profile_pic_url_hd via login session
+URL: https://instagram.fdps19-1.fna.fbcdn.net/v/t51.2885-19/158683583_4016392835046589_742654750626520528_n.jpg?stp=dst-jpg_s150x150_tt6&_nc_cat=107&_nc_map=urlgen_bucketless&ccb=7-5&_nc_sid=f7ccc5&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLnd3dy40ODAuQzIifQ\u00253D\u00253D&_nc_ohc=JGMpEJNHM1cQ7kNvwHmdKM3&
+Tanggal: 02 Okt 2026
+Akun login: ds_user_id 45508859492

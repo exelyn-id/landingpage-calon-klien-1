@@ -1,0 +1,4 @@
+logo.jpg = IG header s150x150 via Playwright login
+URL: https://instagram.fdps19-1.fna.fbcdn.net/v/t51.82787-19/629431068_17923132092231539_3933971714384890410_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDgwLmMyIn0&_nc_ht=instagram.fdps19-1.fna.fbcdn.net&_nc_cat=111&_nc_oc=Q6cZ2gFpOgWKMAxw3E0lPAXuouZqeLjdqYmIwTfnyx
+Tanggal: 02 Okt 2026
+Catatan: resize ke 320/1080 ditolak 403 (signed URL). Ini maksimal publik tanpa file owner.

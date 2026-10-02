@@ -1,0 +1,41 @@
+"use client";
+
+import React from "react";
+import { SectionHeading } from "@/components/ui/SectionHeading";
+import { BenefitCard } from "@/components/ui/BenefitCard";
+import { benefits } from "@/lib/constants";
+import { motion } from "framer-motion";
+import { MapPin, Home, Sparkles, Users } from "lucide-react";
+
+const icons = [<MapPin key="0" className="w-8 h-8" />, <Home key="1" className="w-8 h-8" />, <Sparkles key="2" className="w-8 h-8" />, <Users key="3" className="w-8 h-8" />];
+
+export function Benefits() {
+  return (
+    <section id="keunggulan" className="py-20 md:py-28 bg-white">
+      <div className="container mx-auto px-6 md:px-8 max-w-7xl">
+        <SectionHeading subtitle="Ruang yang humble untuk memulai perjalanan yogamu.">
+          Kenapa Yoga di Humble Nest?
+        </SectionHeading>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 gap-y-12">
+          {benefits.map((benefit, i) => (
+            <motion.div
+              key={i}
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-50px" }}
+              transition={{ delay: i * 0.1, duration: 0.5 }}
+            >
+              <BenefitCard
+                title={benefit.title}
+                description={benefit.description}
+                icon={icons[i % icons.length]}
+                className="h-full"
+              />
+            </motion.div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}

@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Latihan Mental Math</title>
+  <meta name="color-scheme" content="dark">
+  <style>
+  * { box-sizing: border-box; font-family: system-ui, Arial, sans-serif; }
+  body { margin: 0; background: #121212; color: #e6e6e6; display: flex; justify-content: center; min-height: 100vh; }
+  .card { background: #1e1e1e; width: 100%; max-width: 480px; margin: 24px 12px; padding: 24px; border-radius: 12px; box-shadow: 0 4px 16px rgba(0,0,0,.5); height: fit-content; border: 1px solid #333; }
+  h1 { font-size: 20px; margin: 0 0 16px; text-align: center; color: #e6e6e6; }
+  label { font-size: 14px; font-weight: 600; display: block; margin: 12px 0 6px; color: #d0d0d0; }
+  select, input[type=number], input[type=text] { width: 100%; padding: 10px; font-size: 16px; border: 1px solid #444; border-radius: 8px; background: #2a2a2a; color: #e6e6e6; }
+  select:focus, input[type=text]:focus { outline: 2px solid #1a73e8; border-color: #1a73e8; }
+  input::placeholder { color: #8a8a8a; }
+  input[type=range] { width: 100%; accent-color: #4d9fff; }
+  .level-row { display: flex; align-items: center; gap: 10px; }
+  .level-row output { font-size: 22px; font-weight: 700; min-width: 44px; text-align: center; color: #4d9fff; }
+  .diff { text-align: center; font-size: 13px; color: #9a9a9a; margin-top: 4px; }
+  button { width: 100%; padding: 12px; margin-top: 16px; font-size: 16px; font-weight: 700; border: 0; border-radius: 8px; background: #1a73e8; color: #e6e6e6; cursor: pointer; }
+  button:disabled { background: #3a3a3a; color: #7a7a7a; cursor: default; }
+  button.secondary { background: #2e2e2e; color: #d0d0d0; border: 1px solid #444; }
+  .hud { display: flex; justify-content: space-between; margin: 16px 0 8px; font-size: 14px; font-weight: 600; color: #d0d0d0; }
+  .timer { font-size: 32px; font-weight: 800; text-align: center; margin: 4px 0; font-variant-numeric: tabular-nums; color: #4d9fff; }
+  .timer small { font-size: 14px; font-weight: 400; color: #9a9a9a; }
+  .soal { font-size: 38px; font-weight: 800; text-align: center; margin: 16px 0; letter-spacing: 1px; color: #e6e6e6; }
+  .feedback { min-height: 24px; text-align: center; font-weight: 700; margin-top: 8px; }
+  .benar { color: #4ade80; } .salah { color: #f87171; }
+  .hasil { text-align: center; color: #e6e6e6; }
+  .hasil .angka { font-size: 44px; font-weight: 800; color: #4d9fff; }
+  .hidden { display: none; }
+  .progress { height: 8px; background: #2e2e2e; border-radius: 99px; overflow: hidden; }
+  .progress div { height: 100%; background: #1a73e8; width: 0%; }
+</style>
+</head>
+<body>
+<div class="card">
+  <h1>🧠 Latihan Mental Math</h1>
+
+  <div id="setup">
+    <label for="mode">Operasi</label>
+    <select id="mode">
+      <option value="campuran" selected>Campuran (+ − × ÷)</option>
+      <option value="tambah">Penjumlahan (+)</option>
+      <option value="kurang">Pengurangan (−)</option>
+      <option value="kali">Perkalian (×)</option>
+      <option value="bagi">Pembagian (÷)</option>
+    </select>
+
+    <label for="level">Level (0 – 100)</label>
+    <div class="level-row">
+      <input type="range" id="level" min="0" max="100" value="0">
+      <output id="levelOut">0</output>
+    </div>
+    <div class="diff" id="diffLabel">Sangat Mudah</div>
+
+    <button id="btnStart">Mulai (10 soal)</button>
+  </div>
+
+  <div id="quiz" class="hidden">
+    <div class="hud"><span id="soalKe">Soal 1/10</span><span id="skor">✅ 0</span></div>
+    <div class="progress"><div id="bar"></div></div>
+    <div class="timer"><span id="waktu">0</span> <small>detik</small></div>
+    <div class="soal" id="soalTeks">1 + 1 = ?</div>
+    <input type="text" id="jawaban" inputmode="numeric" autocomplete="off" placeholder="Ketik jawaban lalu Enter">
+    <button id="btnJawab">Jawab</button>
+    <div class="feedback" id="feedback"></div>
+    <button id="btnBatal" class="secondary">Berhenti</button>
+  </div>
+
+  <div id="result" class="hidden">
+    <div class="hasil">
+      <div>Selesai!</div>
+      <div class="angka" id="hasilSkor">10/10</div>
+      <div id="hasilWaktu" style="font-size:18px;margin:8px 0">Total: 0 detik</div>
+      <div id="hasilRata" style="color:#9a9a9a">Rata-rata: 0 detik/soal</div>
+      <div id="hasilDetail" style="font-size:13px;color:#9a9a9a;margin-top:8px"></div>
+    </div>
+    <button id="btnUlangi">Ulangi Level Ini</button>
+    <button id="btnNext" class="secondary">Level Berikutnya ▶</button>
+    <button id="btnMenu" class="secondary">Ganti Level / Mode</button>
+  </div>
+</div>
+
+<script>
+const $ = id => document.getElementById(id);
+const levelEl = $('level'), levelOut = $('levelOut'), diffLabel = $('diffLabel');
+
+function labelLevel(l) {
+  if (l <= 9) return 'Sangat Mudah';
+  if (l <= 29) return 'Mudah';
+  if (l <= 49) return 'Sedang';
+  if (l <= 69) return 'Sulit';
+  if (l <= 89) return 'Sangat Sulit';
+  return 'Ekstrem';
+}
+function syncLevel() {
+  levelOut.textContent = levelEl.value;
+  diffLabel.textContent = labelLevel(+levelEl.value) + ' • 10 soal';
+  localStorage.setItem('mm_level', levelEl.value);
+  localStorage.setItem('mm_mode', $('mode').value);
+}
+levelEl.addEventListener('input', syncLevel);
+$('mode').addEventListener('change', syncLevel);
+levelEl.value = localStorage.getItem('mm_level') ?? 0;
+$('mode').value = localStorage.getItem('mm_mode') ?? 'campuran';
+syncLevel();
+
+const rand = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min;
+
+// --- Skala kesulitan per operasi ---
+function addRange(level) {
+  const max = Math.max(5, Math.floor(5 * Math.pow(1.12, level)));
+  const min = level < 10 ? 1 : Math.floor(max / 4);
+  return [min, max];
+}
+function multMax(level) {
+  return Math.max(5, Math.floor(5 * Math.pow(1.065, level)));
+}
+function divMax(level) {
+  return Math.max(5, Math.floor(5 * Math.pow(1.055, level)));
+}
+
+function pickOp(mode, level) {
+  if (mode !== 'campuran') return mode;
+  const r = Math.random();
+  if (level < 20) return r < 0.5 ? 'tambah' : 'kurang';
+  if (level < 40) { if (r < 0.35) return 'tambah'; if (r < 0.7) return 'kurang'; return 'kali'; }
+  if (r < 0.3) return 'tambah'; if (r < 0.55) return 'kurang'; if (r < 0.8) return 'kali'; return 'bagi';
+}
+
+function buatSoal(mode, level) {
+  const op = pickOp(mode, level);
+  let a, b, teks, kunci;
+  if (op === 'tambah') {
+    const [mn, mx] = addRange(level);
+    a = rand(mn, mx); b = rand(mn, mx);
+    teks = `${a} + ${b}`; kunci = a + b;
+  } else if (op === 'kurang') {
+    const [mn, mx] = addRange(level);
+    a = rand(mn, mx); b = rand(mn, mx);
+    if (b > a) [a, b] = [b, a];
+    teks = `${a} − ${b}`; kunci = a - b;
+  } else if (op === 'kali') {
+    const mx = multMax(level);
+    if (level < 20) { a = rand(2, Math.min(9, mx)); b = rand(2, Math.min(9, mx)); }
+    else { const mn = Math.max(2, Math.floor(mx / 10)); a = rand(mn, mx); b = rand(2, Math.max(9, Math.floor(mx / 2))); }
+    teks = `${a} × ${b}`; kunci = a * b;
+  } else {
+    const dMax = divMax(level), qMax = divMax(level);
+    b = rand(2, dMax);
+    const q = rand(2, qMax);
+    a = b * q;
+    teks = `${a} ÷ ${b}`; kunci = q;
+  }
+  return { teks, kunci };
+}
+
+// --- State quiz ---
+let daftar = [], idx = 0, benar = 0, startTime = 0, timerId = null;
+
+function mulai() {
+  const level = +levelEl.value, mode = $('mode').value;
+  daftar = Array.from({ length: 10 }, () => buatSoal(mode, level));
+  idx = 0; benar = 0;
+  $('setup').classList.add('hidden');
+  $('result').classList.add('hidden');
+  $('quiz').classList.remove('hidden');
+  $('feedback').textContent = '';
+  startTime = Date.now();
+  clearInterval(timerId);
+  timerId = setInterval(() => {
+    $('waktu').textContent = Math.floor((Date.now() - startTime) / 1000);
+  }, 250);
+  tampilSoal();
+}
+
+function tampilSoal() {
+  $('soalKe').textContent = `Soal ${idx + 1}/10`;
+  $('skor').textContent = `✅ ${benar}`;
+  $('bar').style.width = (idx / 10 * 100) + '%';
+  $('soalTeks').textContent = daftar[idx].teks + ' = ?';
+  $('jawaban').value = '';
+  $('feedback').textContent = '';
+  $('feedback').className = 'feedback';
+  $('jawaban').focus();
+}
+
+function jawab() {
+  const val = $('jawaban').value.trim().replace(',', '.');
+  if (val === '') return;
+  const user = Number(val);
+  const kunci = daftar[idx].kunci;
+  const fb = $('feedback');
+  if (user === kunci) {
+    benar++;
+    fb.textContent = '✅ Benar!';
+    fb.className = 'feedback benar';
+  } else {
+    fb.textContent = `❌ Salah. Jawaban: ${kunci}`;
+    fb.className = 'feedback salah';
+  }
+  $('skor').textContent = `✅ ${benar}`;
+  idx++;
+  $('bar').style.width = (idx / 10 * 100) + '%';
+  setTimeout(() => {
+    if (idx >= 10) selesai();
+    else { tampilSoal(); $('soalKe').textContent = `Soal ${idx + 1}/10`; }
+  }, user === kunci ? 400 : 1200);
+}
+
+function selesai() {
+  clearInterval(timerId);
+  const totalDetik = (Date.now() - startTime) / 1000;
+  $('quiz').classList.add('hidden');
+  $('result').classList.remove('hidden');
+  $('hasilSkor').textContent = `${benar}/10`;
+  $('hasilWaktu').textContent = `Total: ${totalDetik.toFixed(1)} detik`;
+  $('hasilRata').textContent = `Rata-rata: ${(totalDetik / 10).toFixed(1)} detik/soal • Level ${levelEl.value}`;
+  $('hasilDetail').textContent = $('mode').selectedOptions[0].text;
+  const btnNext = $('btnNext');
+  btnNext.disabled = +levelEl.value >= 100;
+  btnNext.textContent = +levelEl.value >= 100 ? 'Sudah Level Max 🎉' : 'Level Berikutnya ▶';
+}
+
+$('btnStart').onclick = mulai;
+$('btnJawab').onclick = jawab;
+$('jawaban').addEventListener('keydown', e => { if (e.key === 'Enter') jawab(); });
+$('btnBatal').onclick = () => { clearInterval(timerId); $('quiz').classList.add('hidden'); $('result').classList.add('hidden'); $('setup').classList.remove('hidden'); };
+$('btnUlangi').onclick = mulai;
+$('btnMenu').onclick = () => { $('result').classList.add('hidden'); $('setup').classList.remove('hidden'); };
+$('btnNext').onclick = () => { if (+levelEl.value < 100) { levelEl.value = +levelEl.value + 1; syncLevel(); } mulai(); };
+</script>
+</body>
+</html>

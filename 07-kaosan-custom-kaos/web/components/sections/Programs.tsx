@@ -1,0 +1,68 @@
+"use client";
+
+import React from "react";
+import { SectionHeading } from "@/components/ui/SectionHeading";
+import { ProgramCard } from "@/components/ui/ProgramCard";
+import { WhatsAppButton } from "@/components/ui/WhatsAppButton";
+import { programs } from "@/lib/constants";
+import { motion } from "framer-motion";
+import { Palette, Shirt, Star, ShoppingBag } from "lucide-react";
+
+const icons = [
+  <Palette className="w-7 h-7" />,
+  <Shirt className="w-7 h-7" />,
+  <Star className="w-7 h-7" />,
+  <ShoppingBag className="w-7 h-7" />,
+];
+
+export function Programs() {
+  return (
+    <section id="program" className="py-20 md:py-28 bg-cream relative">
+      <div className="container mx-auto px-6 md:px-8 max-w-7xl">
+        <SectionHeading subtitle="Mau kaos personal, komunitas, atau brand sendiri? Pilih layanannya, lalu order via WA.">
+          Layanan Kaosan
+        </SectionHeading>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+          {programs.map((prog, i) => (
+            <motion.div
+              key={prog.title}
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-100px" }}
+              transition={{ delay: i * 0.1, duration: 0.5 }}
+            >
+              <ProgramCard
+                title={prog.title}
+                description={prog.description}
+                badge={prog.badge}
+                icon={icons[i % icons.length]}
+                className="h-full"
+              />
+            </motion.div>
+          ))}
+        </div>
+
+        <motion.div
+          initial={{ opacity: 0, scale: 0.95 }}
+          whileInView={{ opacity: 1, scale: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+          className="bg-white rounded-3xl p-8 md:p-12 shadow-md border border-border flex flex-col md:flex-row items-center justify-between gap-8 max-w-5xl mx-auto relative overflow-hidden"
+        >
+          <div className="absolute right-0 bottom-0 w-64 h-64 bg-primary-light/50 rounded-tl-full -z-10 translate-x-1/4 translate-y-1/4" />
+
+          <div className="flex-1 text-center md:text-left">
+            <h3 className="text-2xl font-bold text-text mb-4">Free Desain Setiap Order</h3>
+            <p className="text-muted text-lg max-w-xl">
+              Belum punya desain? Ceritakan saja idemu, tim Kaosan bantu buatkan desainnya gratis untuk custom DTF.
+            </p>
+          </div>
+          <div className="shrink-0 w-full md:w-auto">
+            <WhatsAppButton label="Order via WA" size="lg" className="w-full" />
+          </div>
+        </motion.div>
+      </div>
+    </section>
+  );
+}

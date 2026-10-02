@@ -1,0 +1,72 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: var(--font-plus-jakarta-sans), ui-sans-serif, system-ui, sans-serif;
+  
+  --color-navy-950: #071B3A;
+  --color-navy-900: #0B2550;
+  --color-navy-800: #123A72;
+  
+  --color-blue-700: #0878D1;
+  --color-blue-600: #1689E5;
+  --color-blue-500: #2B9AF0;
+  --color-blue-100: #EAF6FF;
+  
+  --color-yellow-500: #FFC400;
+  --color-yellow-400: #FFD32A;
+  --color-yellow-100: #FFF7C7;
+  
+  --color-white: #FFFFFF;
+  --color-off-white: #F7FAFD;
+  
+  --color-text: #101828;
+  --color-muted: #667085;
+  --color-border: #DDE7F2;
+}
+
+:root {
+  --navy-950: #071B3A;
+  --navy-900: #0B2550;
+  --navy-800: #123A72;
+  --blue-700: #0878D1;
+  --blue-600: #1689E5;
+  --blue-500: #2B9AF0;
+  --blue-100: #EAF6FF;
+  --yellow-500: #FFC400;
+  --yellow-400: #FFD32A;
+  --yellow-100: #FFF7C7;
+  --white: #FFFFFF;
+  --off-white: #F7FAFD;
+  --text: #101828;
+  --muted: #667085;
+  --border: #DDE7F2;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  color: var(--text);
+  background-color: var(--white);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Hide scrollbar for carousels */
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.hide-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
