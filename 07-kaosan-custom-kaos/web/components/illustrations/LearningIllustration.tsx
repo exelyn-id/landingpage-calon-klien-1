@@ -21,7 +21,7 @@ export function LearningIllustration() {
 
       {/* Main Content Area */}
       <div className="p-4 h-[calc(100%-2.5rem)] flex flex-col md:flex-row gap-4">
-        {/* Main Video Area (Tutor) */}
+        {/* Main Video Area (Admin) */}
         <div className="flex-1 bg-white rounded-xl overflow-hidden relative border border-border flex items-center justify-center">
           <div className="absolute inset-0 bg-primary-light/30" />
           <motion.div 
@@ -29,7 +29,7 @@ export function LearningIllustration() {
             transition={{ duration: 5, repeat: Infinity }}
             className="w-20 h-20 bg-primary rounded-full flex items-center justify-center text-white text-2xl font-bold shadow-sm z-10"
           >
-            T
+            K
           </motion.div>
           <div className="absolute bottom-3 left-3 bg-black/50 text-white text-xs px-2 py-1 rounded backdrop-blur-sm z-10">
             Tim Kaosan
@@ -46,16 +46,16 @@ export function LearningIllustration() {
           {/* Student Video */}
           <div className="w-24 md:w-full aspect-video bg-white rounded-xl overflow-hidden relative border border-border flex items-center justify-center">
             <div className="w-10 h-10 bg-cream rounded-full flex items-center justify-center text-primary-dark font-bold text-sm shadow-sm z-10">
-              S
+              K
             </div>
             <div className="absolute bottom-1.5 left-1.5 bg-black/50 text-white text-[10px] px-1.5 py-0.5 rounded backdrop-blur-sm z-10">
-              Siswa
+              Kamu
             </div>
           </div>
           
           {/* Fake Progress/Checklist */}
           <div className="flex-1 bg-white rounded-xl border border-border p-3 flex flex-col gap-3">
-            <div className="text-xs font-semibold text-text border-b border-border pb-1">Materi Hari Ini</div>
+            <div className="text-xs font-semibold text-text border-b border-border pb-1">Desainmu</div>
             <div className="flex flex-col gap-2">
               <motion.div 
                 initial={{ opacity: 0, x: -10 }}

@@ -2,9 +2,9 @@
 
 import React from "react";
 import { motion } from "framer-motion";
+import { Clock, MapPin, AtSign } from "lucide-react";
 import { WhatsAppButton } from "@/components/ui/WhatsAppButton";
 import { Button } from "@/components/ui/Button";
-import { HeroIllustration } from "@/components/illustrations/HeroIllustration";
 import Link from "next/link";
 
 export function Hero() {
@@ -55,9 +55,25 @@ export function Hero() {
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.6, delay: 0.2 }}
-            className="flex-1 w-full"
+            className="flex-1 w-full max-w-md"
           >
-            <HeroIllustration />
+            <div className="bg-cream rounded-3xl p-6 md:p-8 shadow-xl border border-border">
+              <p className="text-xs font-bold uppercase tracking-wider text-primary mb-4">Custom Kaos Mulai Rp65rb</p>
+              <ul className="space-y-4 text-left">
+                <li className="flex items-start gap-3">
+                  <span className="bg-primary-light p-2 rounded-lg shrink-0"><AtSign className="w-5 h-5 text-primary" /></span>
+                  <span className="text-sm"><span className="block font-bold text-text">Instagram</span><span className="text-muted">@kaosan.co.id</span></span>
+                </li>
+                <li className="flex items-start gap-3">
+                  <span className="bg-primary-light p-2 rounded-lg shrink-0"><Clock className="w-5 h-5 text-primary" /></span>
+                  <span className="text-sm"><span className="block font-bold text-text">Jam Operasional</span><span className="text-muted">Buka Setiap Hari</span></span>
+                </li>
+                <li className="flex items-start gap-3">
+                  <span className="bg-primary-light p-2 rounded-lg shrink-0"><MapPin className="w-5 h-5 text-primary" /></span>
+                  <span className="text-sm"><span className="block font-bold text-text">Layanan</span><span className="text-muted">Custom DTF free desain, Cotton 24s &amp; 30s</span></span>
+                </li>
+              </ul>
+            </div>
           </motion.div>
 
         </div>
