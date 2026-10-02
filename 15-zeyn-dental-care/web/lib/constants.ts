@@ -12,7 +12,7 @@ export const siteInfo = {
   ctaLabel: "Reservasi via WA",
 };
 
-export const programs = [
+export const programs: { title: string; description: string; message: string; badge?: string }[] = [
   {
     title: "Scaling",
     description: "Pembersihan karang gigi. Tanya jadwal dan biaya via WA.",
