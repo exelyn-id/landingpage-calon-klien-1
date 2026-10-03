@@ -1,0 +1,16 @@
+Estimasi harga domain /tahun (di luar jasa Rp90rb, mengikuti harga registrar saat beli):
+
+.my.id — ±Rp30rb
+.biz.id — ±Rp25rb
+.web.id — ±Rp50rb
+.xyz — ±Rp50rb
+.online / .site / .shop — ±Rp60rb
+.store — ±Rp100rb
+.com — ±Rp175rb
+.net — ±Rp190rb
+.org — ±Rp160rb
+.id — ±Rp250rb
+.co.id — ±Rp300rb
+
+Contoh total: domain .my.id = Rp90rb + ±Rp30rb = ±Rp120rb. Domain .com = Rp90rb + ±Rp175rb = ±Rp265rb.
+Sudah termasuk: setup domain, revisi web, + GRATIS pendaftaran Google Search Console.
